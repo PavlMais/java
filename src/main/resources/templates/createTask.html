@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+        <div class="container">
+            <div class="row">
+                <h1>Create task</h1>
+                <div class="col-md-12">
+                    <form action="#" th:action="@{/createTask}" th:object="${task}" method="post">
+                        <div class="form-group">
+                            <label for="title">Ім'я</label>
+                            <input type="text" class="form-control" th:field="*{title}" id="title">
+                            <span class="invalid text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                        </div>
+
+
+                        <span class="text-danger" th:if="${error != null}" th:text="${error}">Static summary</span>
+
+                        <button class="btn btn-primary" type="submit">Додати</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
