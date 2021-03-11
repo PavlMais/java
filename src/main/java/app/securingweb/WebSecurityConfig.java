@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sendPasswordReset").permitAll()
                 .antMatchers("/todos/{id}").permitAll()
                 .antMatchers("/waitEmail").permitAll()
+                .antMatchers("/register").permitAll()
 
                 .antMatchers("/lib/**").permitAll()
                 .anyRequest().authenticated()

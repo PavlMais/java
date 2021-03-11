@@ -11,9 +11,9 @@
     <section class="my-5">
         <div class="container">
             <div class="row">
-                <h1>Додати користувача</h1>
+                <h1>Реєстрація</h1>
                 <div class="col-md-12">
-                    <form action="#" th:action="@{/create}" th:object="${tas}" method="post">
+                    <form action="#" th:action="@{/create}" th:object="${user}" method="post">
                         <div class="form-group">
                             <label for="name">Ім'я</label>
                             <input type="text" class="form-control" th:field="*{name}" id="name">
@@ -33,7 +33,7 @@
 
                         <span class="text-danger" th:if="${error != null}" th:text="${error}">Static summary</span>
 
-                        <button class="btn btn-primary" type="submit">Додати</button>
+                        <button class="btn btn-primary" type="submit">Register</button>
                     </form>
                 </div>
             </div>

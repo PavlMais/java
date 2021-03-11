@@ -1,6 +1,5 @@
 package app.web;
 
-import java.util.*;
 
 import app.entities.Task;
 import app.entities.Todo;
@@ -46,19 +45,17 @@ public class HomeController {
         this.taskRepository = taskRepository;
     }
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
-    }
-
-    @GetMapping("/")
-    public String home(Model model) {
-
+    @GetMapping("/tasks")
+    public String tasks(Model model){
 
         model.addAttribute("tasks", taskRepository.findAll());
 
         return "index";
+    }
+
+    @GetMapping("/")
+    public String home(Model model) {
+        return "home";
     }
 
     @GetMapping("/contact")
@@ -72,44 +69,43 @@ public class HomeController {
     }
 
     @GetMapping("/createTask")
-    public String showSignUpForm(Task task) {
+    public String createTask(Task task) {
         return "createTask";
     }
+    @GetMapping("/register")
+    public String register(User user) {
+        return "create";
+    }
 
-//    @PostMapping("/create")
-//    public String addUser(@Valid User user, BindingResult result, Model model) {
-//        if (result.hasErrors()) {
-//            return "create";
-//        }
-//
-//        if(userRepository.findByEmail(user.getEmail()) != null){
-//            model.addAttribute("error", "Email is used");
-//            return "create";
-//        }
-//
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//
-//        userRepository.save(user);
-//
-//        emailService.sendSimpleMessage(user.getEmail(),"Успішна реєстрації","Спасібо");
-//        return "redirect:/";
-//    }
+    @PostMapping("/register")
+    public String addUser(@Valid User user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "create";
+        }
+
+        if(userRepository.findByEmail(user.getEmail()) != null){
+            model.addAttribute("error", "Email is used");
+            return "create";
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepository.save(user);
+
+        emailService.sendSimpleMessage(user.getEmail(),"Успішна реєстрації","Спасібо");
+        return "redirect:/tasks";
+    }
+
     @PostMapping("/createTask")
     public String createTask(@Valid Task task, BindingResult result, Model model) {
-    if (result.hasErrors()) {
-        return "createTask";
+        if (result.hasErrors()) {
+            return "createTask";
+        }
+
+        taskRepository.save(task);
+
+        return "redirect:/tssks";
     }
-
-//    if(userRepository.findByEmail(user.getEmail()) != null){
-//        model.addAttribute("error", "Email is used");
-//        return "create";
-//    }
-
-
-    taskRepository.save(task);
-
-    return "redirect:/";
-}
 
     @GetMapping("/edit/{id}")
     public String editTask(@PathVariable("id") Long id, Model model) {
